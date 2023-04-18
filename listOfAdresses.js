@@ -26,4 +26,4 @@ const strangesStreets = [
 
 ]
 
-export { streets, strangesStreets }
+export { strangesStreets }
