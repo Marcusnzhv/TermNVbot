@@ -13,7 +13,7 @@ const handelMessage = (msg) => {
     let adress = {}
     let paramSearch = findNameStreet(msg, arrNameStreets)
     if (!paramSearch) return false
-    adress.street = msg.split(paramSearch)[1].split(',')[0].toLowerCase().replace(/[^А-я ]/, " ").trim()
+    adress.street = msg.split(paramSearch)[1].split(',')[0].toLowerCase().replace(/[^А-я ]/, " ").trim().split(' ').join('')
     adress.app = msg.split('д.')[1].split(',')[0].trim()
     adress.tailMsg = msg.slice(msg.indexOf('д.'))
     return adress
