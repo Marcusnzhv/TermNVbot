@@ -1,5 +1,5 @@
 import express from 'express'
-import { PORT, TOKEN } from './config.js'
+import { PORT, TOKEN, TOKENIncomingBot, IDChatIncomingBot } from './config.js'
 import { Telegraf } from 'telegraf'
 import axios from 'axios'
 import mongoose, { model, Schema } from 'mongoose'
@@ -42,23 +42,39 @@ const Adress = model('Adress', schemaStreet)
 
 bot.on('text', async ctx => {
     ctx.state.mes = ctx.message.text
-    const findAdressDB = async (street, app, tail) => {
-        let result = await Adress.findOne({ shortName: street }).where((street == 'омская') ? { app: app } : {}).exec()
-            .then(async doc => {
-                let msg = `${doc.num} ${doc.color} ${doc.street} ${tail}`
-                await sendMsg(msg)
-            })
+    // const findAdressDB = async (street, app, tail) => {
+    //     let result = await Adress.findOne({ shortName: street }).where((street == 'омская') ? { app: app } : {}).exec()
+    //         .then(async doc => {
+    //             let msg = `${doc.num} ${doc.color} ${doc.street} ${tail}`
+    //             await sendMsg(msg)
+    //         })
+    // }
+    const findAddress = async (street, app, tail) => {
+        try {
+            let query = { shortName: street }
+            if (street === 'омская') {
+                query.app = app
+            }
+            const doc = await Adress.findOne(query).exec()
+            if (!doc) {
+                throw new Error('Адрес не найден')
+            }
+            const msg = `${doc.num} ${doc.color} ${doc.street} ${tail}`
+            await sendMsg(msg)
+        } catch (error) {
+            console.error(error)
+        }
     }
     if (!handelMessage(ctx.state.mes)) {
         sendMsg('❗❗❗' + ctx.state.mes)
     } else {
         let adress = handelMessage(ctx.state.mes)
-        findAdressDB(adress.street, adress.app, adress.tailMsg)
+        findAddress(adress.street, adress.app, adress.tailMsg)
     }
 })
 
 const sendMsg = async (msg) => {
-    await axios(`https://api.telegram.org/bot6261618326:AAFeM3yjZG78GL4YJTOxJ7pAFvh7Jpy74-g/sendMessage?chat_id=1414224565&text=${msg}`)
+    await axios(`https://api.telegram.org/bot${TOKENIncomingBot}/sendMessage?chat_id=${IDChatIncomingBot}&text=${msg}`)
 }
 
 bot.launch()
