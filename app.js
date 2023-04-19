@@ -52,7 +52,8 @@ bot.on('text', async ctx => {
             if (!doc) {
                 throw new Error('Адрес не найден')
             }
-            const msg = `${doc.num} ${doc.color} ${doc.street} ${tail}`
+            //const msg = `${doc.num} ${doc.color} ${doc.street} ${tail}`
+            let msg = `<b>${doc.num}</b> ${doc.color} ${doc.street} ${tail}`
             await sendMsg(msg)
         } catch (error) {
             console.error(error)
@@ -68,7 +69,13 @@ bot.on('text', async ctx => {
 
 const sendMsg = async (msg) => {
     try {
-        await axios(`https://api.telegram.org/bot${TOKENIncomingBot}/sendMessage?chat_id=${IDChatIncomingBot}&text=${msg}`)
+        await axios.get(`https://api.telegram.org/bot${TOKENIncomingBot}/sendMessage?chat_id=${IDChatIncomingBot}&text=${msg}`, {
+            params: {
+                chat_id: IDChatIncomingBot,
+                text: msg,
+                parse_mode: 'HTML'
+            }
+        })
     } catch (error) {
         console.error(error)
     }
