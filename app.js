@@ -74,7 +74,12 @@ bot.on('text', async ctx => {
 })
 
 const sendMsg = async (msg) => {
-    await axios(`https://api.telegram.org/bot${TOKENIncomingBot}/sendMessage?chat_id=${IDChatIncomingBot}&text=${msg}`)
+    try {
+        await axios(`https://api.telegram.org/bot${TOKENIncomingBot}/sendMessage?chat_id=${IDChatIncomingBot}&text=${msg}`)
+    } catch (error) {
+        console.error(error)
+    }
+
 }
 
 bot.launch()
