@@ -69,7 +69,7 @@ bot.on('text', async ctx => {
 
 const sendMsg = async (msg) => {
     try {
-        await axios.get(`https://api.telegram.org/bot${TOKENIncomingBot}/sendMessage?chat_id=${IDChatIncomingBot}&text=${msg}`, {
+        await axios.get(`https://api.telegram.org/bot${TOKENIncomingBot}/sendMessage`, {
             params: {
                 chat_id: IDChatIncomingBot,
                 text: msg,
