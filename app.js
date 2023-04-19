@@ -42,13 +42,6 @@ const Adress = model('Adress', schemaStreet)
 
 bot.on('text', async ctx => {
     ctx.state.mes = ctx.message.text
-    // const findAdressDB = async (street, app, tail) => {
-    //     let result = await Adress.findOne({ shortName: street }).where((street == 'омская') ? { app: app } : {}).exec()
-    //         .then(async doc => {
-    //             let msg = `${doc.num} ${doc.color} ${doc.street} ${tail}`
-    //             await sendMsg(msg)
-    //         })
-    // }
     const findAddress = async (street, app, tail) => {
         try {
             let query = { shortName: street }
