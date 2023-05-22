@@ -1,9 +1,10 @@
 export const PORT = 3000
-export const TOKEN = '5832141862:AAGtfFJQgQm3jfdAdpZwbcCh4maYuSkU0i4'
-export const dbURI = 'mongodb+srv://admin:Jn4MtudOvu6JPke8@cluster0.ou8ozrr.mongodb.net/list-adresses?retryWrites=true&w=majority'
+//IncomingTermnvbot
+export const TOKEN = '6080667446:AAF55L9FyFEsC2nU2ChHxmt4j_0YMp9cTbA'
+export const dbURI = 'mongodb+srv://admin:CPe-jSr-J8V-d7U@cluster0.ou8ozrr.mongodb.net/list-adresses?retryWrites=true&w=majority'
 //export const TOKENIncomingBot = '5731573756:AAHSFzOm-f7YUYE6oVmoSuuLlMAQy1OJoK4'
-export const TOKENIncomingBot = '6261618326:AAFeM3yjZG78GL4YJTOxJ7pAFvh7Jpy74-g' // мой бот
+//NvTermBot
+export const TOKENIncomingBot = '5987853117:AAGqIJFXzkPdH0Su9GyW3ZaepV1W6-OD0to' // мой бот Куда приходит сообщение
 //export const IDChatIncomingBot = '1672090888'
-export const IDChatIncomingBot = '1414224565' // ид моего бота
-
-
+export const IDChatIncomingBot = '1672090888' // ид моего бота
+//5987853117:AAGqIJFXzkPdH0Su9GyW3ZaepV1W6-OD0to
