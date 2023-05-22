@@ -9,7 +9,14 @@ import { handelMessage } from './services.js'
 
 const app = express()
 const bot = new Telegraf(TOKEN)
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose
+    .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log('Connect to MongoDB is OK')
+    })
+    .catch(err => {
+        console.log(err)
+    })
 
 bot.start(ctx => {
     ctx.replyWithHTML('<b>Welcome my friend</b>')
@@ -29,7 +36,7 @@ const schemaStreet = new Schema({
         required: true
     },
     app: {
-        type: String,
+        type: Number,
         required: false
     },
     shortName: {
@@ -44,15 +51,12 @@ bot.on('text', async ctx => {
     ctx.state.mes = ctx.message.text
     const findAddress = async (street, app, tail) => {
         try {
-            let query = { shortName: street }
-            if (street === 'омская') {
-                query.app = app
-            }
-            const doc = await Adress.findOne(query).exec()
+            let query = {}
+            const doc = await Adress.findOne({ shortName: street, app: app.replace(/[^0-9]/g, '') })//.exec()
+            console.log(doc)
             if (!doc) {
-                throw new Error('Адрес не найден')
+                throw new Error(`Адрес не найден, ${query.shortName}`)
             }
-            //const msg = `${doc.num} ${doc.color} ${doc.street} ${tail}`
             let msg = `<b>${doc.num}</b> ${doc.color} ${doc.street} ${tail}`
             await sendMsg(msg)
         } catch (error) {
